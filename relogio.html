@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Relógio </title>
+</head>
+<body>
+    <div class="container">
+        <div class="tela">
+            <div class="relogio">
+                <div id="pCentral"></div>
+                <div id="pHoras"></div>
+                <div id="pMinutos"></div>
+                <div id="pSegundos"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="relDig">
+        <p style="font-family: poppins;"> O horário atual é: </p>
+        <input type="text" style="width: 55px; margin-left: 40px;" id="rel" readonly/>
+    </div>
+
+</body>
+
+
+<script>
+    function relogioDig(){
+        var data = new Date();
+        var hou = data.getHours();
+        var min = data.getMinutes();
+        var sec = data.getSeconds();
+
+        if(hou < 10){
+            hou ="0" + hou;
+        }
+        if(min < 10){
+            min ="0" + min;
+        }
+        if(sec < 10){
+            sec ="0" + sec;
+        }
+
+        var horas=hou + ":" + min + ":" +sec;
+        document.getElementById("rel").value=horas;
+    }
+
+    var tempo=setInterval(relogioDig,1000);
+
+    function relogioAnalogico(){
+        var data = new Date();
+        var hor = data.getHours();
+        var min = data.getMinutes();
+        var seg = data.getSeconds();
+        /*var mil = data.getMilliseconds(); -> para animação mais fluida*/
+
+        /* Animação mais fluida */
+        /* var sElement = seg * 6 + mil/166; */
+
+        /* Animação com pausas*/
+        var sElement = seg * 6;
+        var mElement = (min * 6) + (0.1 * seg); // 6deg por min. A cada min o pont. se move 6 graus. 60min = 6/60: 0,1
+        var hElement = (hor * 30) + (0.5 * min); // 30deg por min. A cada hora o pont. se move 30 graus. 30/60min: 0.5
+
+        pSegundos.style.transform= `rotate(${sElement}deg)`;
+        pMinutos.style.transform = `rotate(${mElement}deg)`;
+        pHoras.style.transform = `rotate(${hElement}deg)`;
+    }
+
+        var intervalo = setInterval(relogioAnalogico, 1);
+
+
+</script>
+
+<style>
+    body {
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+
+.container{
+    background-color: white;
+    height: 200px;
+    width: 200px;
+    border-radius: 30px;
+    border: 1px solid grey;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+
+.tela{
+    background-color: black;
+    height: 190px;
+    width: 190px;
+    border-radius: 30px;
+    display: flex;
+    position: relative;
+    align-items: center;
+    justify-content: center;
+}
+
+.relogio{
+    background-color: white;
+    background-image: url('marcadores.png');
+    background-size: 150px;
+    height: 150px;
+    width: 150px;
+    border-radius: 100px;
+    display: flex;
+    position: absolute;
+    align-items: center;
+    justify-content: center;
+}
+
+.relDig{
+margin-left: 20px;
+}
+
+#pCentral{
+    background-color: black;
+    position: absolute;
+    border-radius: 50%;
+    width: 15px;
+    height: 15px;
+    z-index: 10;
+    box-shadow: 0px 0px 4px black;
+}
+#pSegundos{
+    background-color: red;
+    position: absolute;
+    width: 3px;
+    height: 70px;
+    border-radius: 50px;
+    z-index: 8;
+    margin-bottom:65px;
+    box-shadow: 0px 0px 4px black;
+    transform-origin: bottom;
+}
+
+#pMinutos{
+    background-color: black;
+    position: absolute;
+    z-index: 4;
+    width: 4px;
+    height: 60px;
+    border-radius: 50px;
+    margin-bottom: 60px;
+    box-shadow: 0px 0px;
+    transform-origin: bottom;
+}
+
+#pHoras{
+    background-color: black;
+    border: 1px solid white;
+    position: absolute;
+    width: 5px;
+    height: 40px;
+    border-radius: 50px;
+    z-index: 6;
+    margin-bottom:40px;
+    box-shadow: 0px 0px 4px black;
+    transform-origin: bottom;
+}
+
+
+
+</style>
+</html>
